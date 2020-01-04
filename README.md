@@ -60,11 +60,11 @@ Na figura abaixo, da esquerda para a direita: Golden Axe (Arcade), Streets of Ra
 ### VENCEDORES NÃO USAM DROGAS!
 ![](/imagens/figura08.png)
 
-Os arcades fabricados nos Estados Unidos exibiam um slogan anti-drogas quando a máquina era ligada. De fato, drogas não te fazem bem e não te fazem um cara legal... NÃO USEM!
+Os arcades fabricados nos Estados Unidos exibiam um slogan anti-drogas quando a máquina era ligada. De fato, drogas não te fazem bem e não te tornam um cara legal... NÃO USEM!
 
 ### CyberGamba
 Agradeço ao CyberGamba, o ilustre anônimo da internet que fez o primeiro tutorial de criação de jogos que tive contato. 
-Embora eu ainda não tenha criado nenhum jogo, foram excelentes os seus tutoriais, e parte desse minicurso é baseada nele. 
+Embora eu ainda não tenha criado nenhum jogo, foram excelentes os seus tutoriais, e parte desse minicurso é baseada [nele](/outros_tutoriais/CYBERGAMBA_CRIE_SEUS_JOGOS.PDF). 
 
 ![](/imagens/figura09.png)
 
@@ -73,7 +73,7 @@ Em 2003, ficou famoso por criar o jogo Street Chaves (figura abaixo), uma paród
 ![](/imagens/figura10.png)
 
 Usava Delphi 5, uma linguagem pascal orientada a objetos, com a biblioteca DelphiX, e desenvolveu vários outros jogos com personagens do Chaves. 
-Na figura abaixo, da esquerda para a direita: Madruga from Mars, Super Magro World, Madruga Goes Home e Madruga Craft.
+Na figura abaixo, da esquerda para a direita: Madruga from Mars, Super Magro World, Madruga Goes Home e Madruga Craft. Esses e vários outros jogos são encontrados para [download](https://sites.google.com/site/cybergamba/arquivos).
 
 ![](/imagens/figura11.png)
 
