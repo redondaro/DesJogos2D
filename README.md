@@ -144,7 +144,7 @@ No NetBeans 11, após etapa 2., escolha “Java with Ant”
 
 ![](/imagens/figura19.png)
 
-Assim, um novo projeto é criado.
+Assim, um novo projeto é criado. A função "public static void main (String[] args)" é a função principal, que será executada.
 
 ![](/imagens/figura20.png)
 
@@ -155,6 +155,122 @@ Assim, um novo projeto é criado.
 
 ![](/imagens/figura21.png)
 
+
 ## Exemplo 1: Capturar entradas e movimentar objeto na tela
+
+Vamos criar uma janela de 640x480. Nela, será desenhado apenas um quadrado de tamanho 22x22. O quadrado estará no centro da janela e poderá ser movido com as setas de direção ←, →, ↑ e ↓.
+
+![](/imagens/figura22.png)
+
+- Baixe o arquivo [quadrado.png](/baixar/quadrado.png)
+- Copie para o pacote dentro da pasta do projeto (ou do modo mais fácil, arraste com o mouse)
+
+![](/imagens/figura23.png)
+
+As figuras ficarão nas pastas do projeto, que por padrão do NetBeans são: 
+
+Linux: /home/**<nome_usuário>**/NetBeansProjects/NomeProjeto/src/Pacote/ 
+
+Windows: .../**<nome_usuário>**/Documentos/NetBeansProjects/NomeProjeto/src/Pacote/ 
+
+### Código a ser adicionado na função main
+
+
+```
+    public static void main(String[] args) {
+
+        Window janela = new Window(640,480);     //janela principal
+        Keyboard teclado = janela.getKeyboard(); //capturar teclas
+        
+        Sprite quadrado = new Sprite("src//exemplo1//quadrado.png“, 1);
+        quadrado.x = 308;   quadrado.y = 228;
+
+        while (true) {                  //loop infinito
+            janela.clear(Color.black);  //apagar tela
+
+            if (teclado.keyDown(Keyboard.UP_KEY))       quadrado.y -= 0.2;
+            if (teclado.keyDown(Keyboard.DOWN_KEY))     quadrado.y += 0.2;
+            if (teclado.keyDown(Keyboard.LEFT_KEY))     quadrado.x -= 0.2;
+            if (teclado.keyDown(Keyboard.RIGHT_KEY))    quadrado.x += 0.2;
+
+            if (teclado.keyDown(Keyboard.ESCAPE_KEY))	System.exit(0);
+
+            quadrado.draw();        //desenhar quadrado
+            janela.update();        //atualizar janela
+        }
+    }
+```
+
+Algumas classes ficarão sublinhadas de vermelho, pois não estão definidos os caminhos destas.
+
+![](/imagens/figura24.png)
+
+Para resolver isso, abaixo da declaração "package <nome_do_pacote>;", adicione:
+
+```
+import java.awt.Color;
+import jplay.Keyboard;
+import jplay.Sprite;
+import jplay.Window;
+```
+
+Estando tudo certo, aperte F6 para executar o código. 
+
+Para evitar que o objeto saia da tela, adicione limites, substituindo esse trecho
+
+```
+            if (teclado.keyDown(Keyboard.UP_KEY))       quadrado.y -= 0.2;
+            if (teclado.keyDown(Keyboard.DOWN_KEY))     quadrado.y += 0.2;
+            if (teclado.keyDown(Keyboard.LEFT_KEY))     quadrado.x -= 0.2;
+            if (teclado.keyDown(Keyboard.RIGHT_KEY))    quadrado.x += 0.2;
+```
+
+por esse
+
+```
+            if (teclado.keyDown(Keyboard.UP_KEY))
+                if (quadrado.y > 0)
+                    quadrado.y -= 0.2;
+            if (teclado.keyDown(Keyboard.DOWN_KEY))
+                if (quadrado.y < 454)
+                    quadrado.y += 0.2;
+            if (teclado.keyDown(Keyboard.LEFT_KEY))
+                if (quadrado.x > 0)
+                    quadrado.x -= 0.2;
+            if (teclado.keyDown(Keyboard.RIGHT_KEY))
+                if (quadrado.x < 616)
+                    quadrado.x += 0.2;
+```
+
+## Colisões
+É um dos elementos mais importantes do jogo, que ocorre quando elementos do jogo se encostam. Cada elemento possui uma área que pode colidir com a área de outros elementos, conhecida como *hitbox*.
+
+Nos exemplos abaixo, cada elemento que pode colidir está com sua hitbox contornada de alguma cor. Nele, a nave vermelha colide com o disparo da nave azul e o monstro colide com a mão do personagem. Observe que no segundo exemplo o personagem também colide com a parte de cima de uma plataforma, que o impede de cair.
+
+![](/imagens/figura25.png)
+
+Se um dos pontos de A estiver dentro de B (ou vice-versa), ocorre a colisão, conforme a figura abaixo. Nela, A1 ≤ B1 ≤ A2 no eixo X e A1 ≤ B1 ≤ A3 no eixo Y. Na prática, o jogo reconhece a colisão quando os elementos se encostam.
+
+![](/imagens/figura26.png)
+
+### Tipos de colisões
+Existem várias possibilidades de implementações, sendo 3 tipos os mais comuns.
+
+#### Colisão por imagem
+A hitbox é constituída pela área da figura dos elementos/personagens. Pela sua simplicidade, é a implementação mais comum, sendo usada pela biblioteca JPlay. Possui a desvantagem de gerar falsas colisões, como na segunda figura abaixo, na qual os dois personagens colidem na área vazia.
+
+![](/imagens/figura27.png)
+
+#### Colisão por área
+Cada elemento possui áreas de contato definidas, sem relação com a área das figuras/quadros. Podem existir mais de uma área de contato para cada personagem ou elemento (exemplo abaixo). Alternativa eficiente para as falsas colisões ocorridas na implementação por imagem.
+
+![](/imagens/figura28.png)
+
+#### Colisão por sprite
+Somente considera o contato das áreas não transparentes da figura/quadro (figura abaixo). Alternativa mais sofisticada, por considerar as colisões que de fato ocorreram. O custo computacional é maior que nas outras alternativas.
+
+![](/imagens/figura29.png)
+
+## Exemplo 2 - Colisões
 
 ...
