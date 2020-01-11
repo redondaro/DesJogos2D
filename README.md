@@ -1,5 +1,5 @@
 # Desenvolvimento de Jogos 2D
-Minicurso que apresentei na SECOMPP (Semana da Computação de Presidente Prudente) na UNESP em 2019.
+Minicurso que apresentei na SECOMPP (Semana da Computação de Presidente Prudente) da UNESP em 2019.
 
 ## Introdução - O que é um jogo 2D?
 Os elementos de um jogo 2D são exibidos na matriz de pixels da tela, localizados pelas respectivas coordenadas (x,y). É semelhante ao plano cartesiano, mas com o eixo y invertido. As posições dos pixels variam de 0 a (tamanho da tela - 1).
@@ -64,7 +64,7 @@ Os arcades fabricados nos Estados Unidos exibiam um slogan anti-drogas quando a 
 
 ### CyberGamba
 Agradeço ao CyberGamba, o ilustre anônimo da internet que fez o primeiro tutorial de criação de jogos que tive contato. 
-Embora eu ainda não tenha criado nenhum jogo, foram excelentes os seus tutoriais, e parte desse minicurso é baseada [nele](/outros_tutoriais/CYBERGAMBA_CRIE_SEUS_JOGOS.PDF). 
+Embora eu ainda não tenha criado nenhum jogo, os seus tutoriais me foram excelentes, e parte desse minicurso é baseada [nele](/outros_tutoriais/CYBERGAMBA_CRIE_SEUS_JOGOS.PDF). 
 
 ![](/imagens/figura09.png)
 
@@ -177,12 +177,14 @@ Windows: .../**<nome_usuário>**/Documentos/NetBeansProjects/NomeProjeto/src/Pac
 
 
 ```
+    package exemplo1; //LEIA OBSERVAÇÃO!!!
+    
     public static void main(String[] args) {
 
         Window janela = new Window(640,480);     //janela principal
         Keyboard teclado = janela.getKeyboard(); //capturar teclas
         
-        Sprite quadrado = new Sprite("src//exemplo1//quadrado.png“, 1);
+        Sprite quadrado = new Sprite("src//exemplo1//quadrado.png“, 1); //LEIA OBSERVAÇÃO!!!
         quadrado.x = 308;   quadrado.y = 228;
 
         while (true) {                  //loop infinito
@@ -201,11 +203,13 @@ Windows: .../**<nome_usuário>**/Documentos/NetBeansProjects/NomeProjeto/src/Pac
     }
 ```
 
+__OBSERVAÇÃO: exemplo1 é o nome do pacote (equivalente a uma pasta) do projeto, conforme figura do tópico anterior. Nesse e nos demais exemplos, exemplo1 será usado no import inicial de cada pacote e no endereço da figura a ser carregada, devendo ser substituído pelo nome usado em seu projeto.__ 
+
 Algumas classes ficarão sublinhadas de vermelho, pois não estão definidos os caminhos destas.
 
 ![](/imagens/figura24.png)
 
-Para resolver isso, abaixo da declaração "package <nome_do_pacote>;", adicione:
+Para resolver isso, abaixo da declaração "package exemplo1;", adicione:
 
 ```
 import java.awt.Color;
@@ -273,4 +277,290 @@ Somente considera o contato das áreas não transparentes da figura/quadro (figu
 
 ## Exemplo 2 - Colisões
 
-...
+No projeto do exemplo anterior, será acrescida uma bolinha. Cada vez que o quadrado encostar nela (colidir), mudará de posição.
+
+![](/imagens/figura30.png)
+
+- Baixe o arquivo [bolinha.png](/baixar/bolinha.png)
+- Copie para o pacote dentro da pasta do projeto (ou do modo mais fácil, arraste com o mouse)
+
+![](/imagens/figura31.png)
+
+- Botão direito do mouse no pacote, Novo → Classe Java...
+- Em nome, coloque “Bolinha”
+
+![](/imagens/figura32.png)
+
+### Adicione o código na classe Bolinha.java
+
+```
+package exemplo1;
+
+import jplay.Sprite;
+
+public class Bolinha extends Sprite {
+
+    public Bolinha() {       //construtor
+        super("src//exemplo1//bolinha.png", 1);
+        x = 100;    y = 228;
+    }
+    
+    public void acertou() {  //mudar posição da bolinha
+        if (x == 100) {
+            x = 308;    y = 380;
+        }else
+            if (x == 500){
+                x = 308;    y = 100;
+            }else
+                if (y == 100) {
+                    x = 100;    y = 228;
+                }else{  //y == 500
+                    x = 500;    y = 228;
+                }
+    }
+}
+```
+
+### Adicione os trechos destacados nas respectivas partes do código da main
+
+```
+        ...
+
+        Sprite quadrado = new Sprite("src//exemplo1//quadrado.png“, 1);
+        quadrado.x = 308;   quadrado.y = 228;
+
+        //insira essa linha acima do início do loop infinito
+        Bolinha bolinha = new Bolinha();
+
+        while (true) {  //loop infinito
+
+        ...
+
+            if (teclado.keyDown(Keyboard.ESCAPE_KEY))	System.exit(0);
+
+            // insira essas 3 linhas abaixo entre a linha acima e a linha que desenha o quadrado
+            if (quadrado.collided(bolinha)) //verificar colisão
+                bolinha.acertou();
+            bolinha.draw();    //desenhar bolinha
+
+            quadrado.draw();   //desenhar quadrado
+            janela.update();   //atualizar janela
+
+        ...
+```
+
+## Exemplo 3 - Pong - Autor CyberGamba
+Esse exemplo foi desenvolvido em Delphi por CyberGamba, sendo que eu apenas o adaptei para Java. 
+Nele, são exibidos: o placar do jogador, uma raquete (retângulo azul) controlada pelo jogador, uma bolinha amarela que se movimenta pelas diagonais e as paredes (superior, inferior e direita) que colidem com a bolinha. 
+O movimento da raquete é controlada com as setas do teclado (cima e baixo), e a tecla ESC encerra o jogo. 
+A bolinha começa movimentando no sentido superior direito, refletindo a direção quando colide com uma parede. 
+Se a bolinha passar do limite esquerdo, terá passado pela raquete, o jogador perde e o jogo reinicia.
+
+![](/imagens/figura32.png)
+
+- Baixe e salve os arquivos: [horizontal.png](/baixar/horizontal.png), [vertical.png](/baixar/vertical.png) e [raquete.png](/baixar/raquete.png)
+- Copie-os para o pacote do projeto (igual nos exemplos 1 e 2)
+- Crie as novas classes: Paredes e Raquete
+
+O arquivo “quadrado.png” pode ser excluído do pacote do projeto
+
+![](/imagens/figura33.png)
+
+### O código para a classe Raquete.java
+
+```
+package exemplo1;
+
+import jplay.Keyboard;
+import jplay.Sprite;
+import jplay.Window;
+
+public class Raquete extends Sprite {
+    private Keyboard teclado; //capturar teclas
+
+    public Raquete() {
+        super("src//exemplo1//raquete.png", 1);
+        x = 5;    y = 210;
+    }
+    
+    public void mover(Window janela) {
+        teclado = janela.getKeyboard();
+
+        if (teclado.getKeyDown(Keyboard.UP_KEY))
+            if (y > 40)
+                y -= 0.3;
+
+        if (teclado.getKeyDown(Keyboard.DOWN_KEY))
+            if (y < 405)
+                y += 0.3;
+    }
+}
+```
+
+### O código para a classe Paredes.java
+```
+package exemplo1;
+
+import jplay.Sprite;
+
+public class Paredes {
+    Sprite topo, baixo, direita;
+
+    public Paredes() {
+        topo = new Sprite("src//exemplo1//horizontal.png", 1);
+        baixo = new Sprite("src//exemplo1//horizontal.png", 1);
+        direita = new Sprite("src//exemplo1//vertical.png", 1);
+
+        topo.x = baixo.x = 0;
+        topo.y = 31;
+        baixo.y = 470;
+        direita.x = 632;
+        direita.y = 34;
+    }
+    
+    public void draw() {
+        topo.draw();
+        baixo.draw();
+        direita.draw();
+    }
+
+    //colisões
+    public boolean colidiuTopo(Sprite bolinha) {
+        if (topo.collided(bolinha))
+            return true;
+        return false;
+    }
+    public boolean colidiuBaixo(Sprite bolinha) {
+        if (baixo.collided(bolinha))
+            return true;
+        return false;
+    }
+    public boolean colidiuDireita(Sprite bolinha) {
+        if (direita.collided(bolinha))
+            return true;
+        return false;
+    }
+}
+```
+
+### Mudar o código da classe Bolinha.java para
+```
+package exemplo1;
+
+import jplay.Sprite;
+
+public class Bolinha extends Sprite {
+
+    private double velocidade, //velocidade da bolinha
+                   dirX, //direção da bolinha no eixo X
+                   dirY; //direção da bolinha no eixo Y
+
+    public Bolinha() {
+        super("src//exemplo1//bolinha.png", 1);
+        velocidade = 0.2;
+        dirX = 1; dirY = -1;
+        x = 30;    y = 250;
+    }
+    
+    public void acertou() {
+        dirX = 1;
+        velocidade += 0.1;
+    }
+
+    public void mover(Paredes parede) {
+        x = x + (dirX*velocidade);
+        y = y + (dirY*velocidade);
+        
+        //verificar colisões da bola com as paredes
+        if (parede.colidiuDireita(this))
+            dirX = -1;
+        if (parede.colidiuTopo(this))
+            dirY = 1;
+        else
+            if (parede.colidiuBaixo(this))
+                dirY = -1;
+    }
+    
+    public int getDirecao() {
+        if (dirX < 0)
+            return -1;
+        else
+            return 1;
+    }
+}
+```
+
+### A classe que possui a função main deverá ficar:
+
+```
+package exemplo1;
+
+import java.awt.Font;
+import java.awt.Color;
+import jplay.Keyboard;
+import jplay.Sound;
+import jplay.Window;
+
+public class Main {
+
+    private static int pontos;       //pontuação do jogador
+    private static Raquete raquete;  //raquete do jogador
+    private static Bolinha bolinha;  //bolinha
+    private static Paredes paredes;  //paredes
+    
+    private static void iniciar() {  // re/iniciar jogo
+        pontos = 0;
+        bolinha = new Bolinha();
+        raquete = new Raquete();
+        paredes = new Paredes();
+    }
+
+    public static void main(String[] args) {
+        Window janela = new Window(640,480);     //janela principal
+        Keyboard teclado = janela.getKeyboard(); //capturar teclas
+        iniciar();
+        
+        while (true) {                 //loop infinito
+            janela.clear(Color.black); //apagar tela
+
+            janela.drawText("PONG", 20, 20, Color.white, new Font("Default",0, 14));
+            janela.drawText("Pontos: " + pontos, 320, 20, Color.white, new Font("Default",0, 14));
+
+            raquete.mover(janela);    //movimentar os objetos
+            bolinha.mover(paredes);
+
+            if (raquete.collided(bolinha) && bolinha.getDirecao() < 0) {
+                bolinha.acertou();    pontos += 10;
+            }else
+                if (bolinha.x < -20)  //se bolinha saiu da tela
+                    iniciar();
+
+            paredes.draw(); bolinha.draw(); raquete.draw();  //exibir objetos
+            janela.update();          //atualizar janela
+
+            if (teclado.keyDown(Keyboard.ESCAPE_KEY))	System.exit(0);
+        }   
+    }
+}
+```
+
+### Adicionar efeitos sonoros
+Baixe e salve os arquivos: [click.wav](/baixar/click.wav) e [explode.wav](/baixar/explode.wav), e coloque-os na pasta do projeto. Em seguida, encontre os trechos em que a bolinha colide e sai da tela no código da main, e adicione os trechos:
+
+```
+            bolinha.mover(paredes);
+
+            if (raquete.collided(bolinha) && bolinha.getDirecao() < 0) {
+                bolinha.acertou();    pontos += 10;
+
+                new Sound("src//exemplo1//click.wav").play(); //som de acerto
+
+            }else
+                if (bolinha.x < -20) { //se bolinha saiu da tela
+                    iniciar();
+
+                    new Sound("src//exemplo1//explode.wav").play(); //som de erro
+
+                }
+            paredes.draw();    bolinha.draw();    raquete.draw();  //exibir objetos
+```
