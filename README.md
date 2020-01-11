@@ -586,16 +586,48 @@ Deve-se desenhar na tela apenas os elementos que são visíveis na câmera, de m
 
 ### Personagens
 
-...
+Possuem várias características, que deverão possuir variáveis para armazenar e tratar.
+- Estado: parado, andando, abaixado, etc
+- Ciclo: passo 1, passo 2, ...
+- Imagem do personagem para cada ciclo
+
+![](/imagens/figura37.png)
+
+Como na figura acima, cada imagem deve possuir seu inverso, completando as ações do jogador para qualquer direção (esquerda ou direita).
+
 
 ### FPS (Frames per Second)
+Da forma que até então implementamos (abaixo), o jogo será executado na velocidade máxima suportada pelo processador. A velocidade de execução será diferente de uma máquina para outra. Ou seja, __essa implementação não é adequada!__
 
-...
+```
+enquanto (verdade) {
+    apaga_tela();
+    atualiza_mecanica();
+    exibe_saída();
+}
+```
+
+__Solução:__ levando em conta que o computador trata o tempo em milissegundos e que ele deve atualizar o jogo N vezes por segundo, procuramos um intervalo I, que é dado pela fórmula: I = 1000 ÷ N 
+
+Exemplo: para obter uma taxa de ...
 
 
 ## Outros exemplos em JPlay
 
-... ex 4 e 5
+Exemplo 4 - Nave - Autor CyberGamba 
+Outro exemplo que foi desenvolvido em Delphi por CyberGamba, sendo que eu apenas adaptei para Java. 
+- Possui elementos principais de um jogo: jogador e inimigos
+- Os inimigos são destruídos quando colidem com o disparo do jogador
+- Jogador é destruído ao colidir com um inimigo e jogo reinicia
+- Movimentos pelas setas do teclado, espaço atira e ESC sai do jogo
+
+![](/imagens/figura38.png) 
+
+
+Exemplo 5 - Alex Kidd
+...
+
+![](/imagens/figura39.png)
 
 
 ## Referências
