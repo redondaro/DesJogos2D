@@ -356,7 +356,7 @@ O movimento da raquete é controlada com as setas do teclado (cima e baixo), e a
 A bolinha começa movimentando no sentido superior direito, refletindo a direção quando colide com uma parede. 
 Se a bolinha passar do limite esquerdo, terá passado pela raquete, o jogador perde e o jogo reinicia.
 
-![](/imagens/figura32.png)
+![](/imagens/figura33.png)
 
 - Baixe e salve os arquivos: [horizontal.png](/baixar/horizontal.png), [vertical.png](/baixar/vertical.png) e [raquete.png](/baixar/raquete.png)
 - Copie-os para o pacote do projeto (igual nos exemplos 1 e 2)
@@ -364,7 +364,7 @@ Se a bolinha passar do limite esquerdo, terá passado pela raquete, o jogador pe
 
 O arquivo “quadrado.png” pode ser excluído do pacote do projeto
 
-![](/imagens/figura33.png)
+![](/imagens/figura34.png)
 
 ### O código para a classe Raquete.java
 
@@ -564,3 +564,40 @@ Baixe e salve os arquivos: [click.wav](/baixar/click.wav) e [explode.wav](/baixa
                 }
             paredes.draw();    bolinha.draw();    raquete.draw();  //exibir objetos
 ```
+
+## Outros conceitos
+Alguns elementos presentes nos jogos 2D, os quais terão apenas os seus conceitos básicos explicados, de modo a não acrescentar complexidade e dificuldade de entendimento nesse minicurso.
+
+### Mapa de objetos
+É o mapeamento dos elementos de cada cenário do jogo: plataformas, itens e várias outras coisas que podem interagir com o personagem do jogador, podendo também apresentar elementos decorativos (que não possuem interação), posição inicial do jogador e inimigos. 
+Ao iniciar o jogo, todos os elementos são montados conforme o mapa de objetos para o cenário que será exibido. 
+O mapa de objetos pode ser implementado de diversas formas, sendo mais comum um arquivo de imagem em que cada pixel representa um determinado elemento. 
+Na figura abaixo, temos: no canto superior esquerdo está o arquivo png aberto em um editor de imagens, abaixo os objetos do cenário (item, nuvem, ...), à direita o arquivo pgm aberto em um editor de texto, e na parte de baixo, o cenário gerado.
+
+![](/imagens/figura35.png)
+
+### Câmera
+Em cenários maiores que a tela, deve-se tratar a posição do personagem, elementos do cenário e inimigos,  o personagem seja exibido no centro da tela, como se tivesse uma câmera o acompanhando enquanto percorre o cenário. 
+
+![](/imagens/figura36.png)
+
+Deve-se desenhar na tela apenas os elementos que são visíveis na câmera, de modo a otimizar o desempenho do computador na execução do jogo. Imagine um cenário 100 vezes maior que o da figura acima, e quanto o jogo pode ficar mais "pesado" tratando todos os elementos desenhados, ao invés de apenas os visíveis.
+
+
+### Personagens
+
+...
+
+### FPS (Frames per Second)
+
+...
+
+
+## Outros exemplos em JPlay
+
+... ex 4 e 5
+
+
+## Referências
+
+...
