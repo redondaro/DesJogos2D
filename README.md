@@ -1,6 +1,7 @@
 # Desenvolvimento de Jogos 2D
 Minicurso que apresentei na SECOMPP (Semana da Computação de Presidente Prudente) da UNESP em 2019.
 
+
 ## Introdução - O que é um jogo 2D?
 Os elementos de um jogo 2D são exibidos na matriz de pixels da tela, localizados pelas respectivas coordenadas (x,y). É semelhante ao plano cartesiano, mas com o eixo y invertido. As posições dos pixels variam de 0 a (tamanho da tela - 1).
 
@@ -596,20 +597,38 @@ Possuem várias características, que deverão possuir variáveis para armazenar
 Como na figura acima, cada imagem deve possuir seu inverso, completando as ações do jogador para qualquer direção (esquerda ou direita).
 
 
-### FPS (Frames per Second)
-Da forma que até então implementamos (abaixo), o jogo será executado na velocidade máxima suportada pelo processador. A velocidade de execução será diferente de uma máquina para outra. Ou seja, __essa implementação não é adequada!__
+### Ciclo de atualização por segundo
+Esse ciclo de atualização é semelhante ao FPS, mas os conceitos não devem ser confundidos, pois o ciclo em questão atualiza as entradas, a dinâmica e a exibição do jogo, enquanto o FPS lida apenas com a exibição do jogo. 
+O ciclo de atualização se faz necessário, pois na forma que até então implementamos (abaixo), o jogo será executado na velocidade máxima suportada pelo processador, ocorrendo da velocidade de execução ser diferente de uma máquina para outra. Ou seja, __essa implementação não é adequada!__
 
 ```
 enquanto (verdade) {
     apaga_tela();
-    atualiza_mecanica();
+    atualiza_dinamica();
     exibe_saída();
 }
 ```
 
-__Solução:__ levando em conta que o computador trata o tempo em milissegundos e que ele deve atualizar o jogo N vezes por segundo, procuramos um intervalo I, que é dado pela fórmula: I = 1000 ÷ N 
+O ciclo dentro do loop deve ser executado em um intervalo de tempo fixo, de modo que o jogo seja atualizado na mesma velocidade em qualquer máquina. Para isso, levamos em conta que o computador trata o tempo em milissegundos e que deve atualizar o jogo N vezes por segundo. O intervalo de atualização I é dado pela fórmula: I = 1000 ÷ N. 
 
-Exemplo: para obter uma taxa de ...
+Exemplo: para atualizar o jogo 60 vezes por segundo: I = 1000 ÷ 60 ≈ 17. Ou seja, o loop deverá aguardar 17 milissegundos entre cada execução. O algoritmo anterior deverá ficar da forma:
+
+```
+tempoIni = TempoSistema(); // milissegundos
+
+enquanto (verdade) {
+
+	se (TempoSistema() >= tempoIni + 17) {
+
+		tempoIni = TempoSistema(); // reiniciar
+
+		apaga_tela();
+     	atualiza_dinamica();
+		exibe_saída();
+     }
+
+}
+```
 
 
 ## Outros exemplos em JPlay
@@ -625,11 +644,36 @@ Outro exemplo que foi desenvolvido em Delphi por CyberGamba, sendo que eu apenas
 
 
 Exemplo 5 - Alex Kidd
-...
+Finalmente, um exemplo que eu desenvolvi... ![](/imagens/figura40.png) 
+
+Trata-se de uma engine de jogo completa, usando vários conceitos apresentados:
+- Mapa de objetos, armazenando as informações em um arquivo .pgm
+- Câmera para focar no jogador
+- Elementos: personagens, plataformas, objetos, ...
+- Física: gravidade, colisões diversas, direção, velocidade, regras de movimentação, etc;
+- Ciclo de atualização por segundo
+
+O código fonte do Alex Kidd está disponível [aqui](https://github.com/redondaro/AlexKidd-Engine).
 
 ![](/imagens/figura39.png)
 
 
-## Referências
+## Materiais interessantes
 
-...
+CyberGamba - Crie Seus Jogos (acessado em 24/09/2004)
+geocities.com/crieseusjogos
+Disponível em [pdf](/outros_tutoriais/CYBERGAMBA_CRIE_SEUS_JOGOS.PDF)
+
+Matérias da faculdade: Computação Gráfica e Processamento Digital de Imagens
+
+[Jplay](www2.ic.uff.br/~leomurta/courses/2013.1/prog1/jplay.pdf)
+
+[The Spriters Resource (obter sprites de jogos)](www.spriters-resource.com)
+
+[The Sounds Resource (obter músicas/sons de jogos)](www.sounds-resource.com)
+
+[Video Game Music (mais músicas/sons de jogos)](downloads.khinsider.com)
+
+[Fliperama do Zé Doido (humor)](fliperamazedoido.wordpress.com)
+
+[Jogos do CyberGamba](sites.google.com/site/cybergamba/arquivos)
